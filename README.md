@@ -21,9 +21,6 @@ Players help a samurai travel through different locations by typing Japanese-rel
 - Animated samurai characters
 - Multiple game endings depending on performance
 
-## Screenshots
-
-Add screenshots of the title screen, gameplay, and ending screens here.
 
 ## Technologies
 
