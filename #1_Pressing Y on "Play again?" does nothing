@@ -1,0 +1,19 @@
+Thanks for the report! I found the cause.
+
+**Cause:** When the player presses Y on "Play again? (y/n)", `levelSelected` is set to `false`, but `gameOver` is never reset. Because `gameOver` stays `true`, `frame()` keeps drawing the ending screen, so the menu never appears.
+
+**Fix:** Reset `gameOver` in the Y branch of `handleKeyDown`:
+
+```js
+if (event.key.toLowerCase() === "y") {
+  levelSelected = false;
+  gameOver = false;   // added
+  result = "";
+  typed = "";
+  lives = 3;
+  alreadyMissed = false;
+  locationKey = "";
+}
+```
+
+With this change, pressing Y returns the player to the menu (1: Beginner / 2: Pro). I'll open a PR with this fix.
