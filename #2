@@ -1,0 +1,21 @@
+Thanks for the report! I found two likely causes.
+
+**Cause 1:** Pro mode sets `caseSensitive = true`, so a sentence typed with different capitalization (for example "the Edo period..." instead of "The Edo period...") is marked NG even when the words are right.
+
+**Cause 2:** `isCorrect` only trims the ends of the input. Repeated spaces inside the sentence make the comparison fail.
+
+**Fix:** Normalize whitespace on both sides before comparing, and make Pro case-insensitive:
+
+```js
+function isCorrect(value, answer) {
+  const clean = value.trim().replace(/\s+/g, " ");
+  const target = answer.trim().replace(/\s+/g, " ");
+  return caseSensitive
+    ? clean === target
+    : clean.toLowerCase() === target.toLowerCase();
+}
+```
+
+and in `startLevel`, change the Pro branch to `caseSensitive = false;`.
+
+With this change, correctly typed Pro sentences are accepted. I'll update the PR with this fix.
